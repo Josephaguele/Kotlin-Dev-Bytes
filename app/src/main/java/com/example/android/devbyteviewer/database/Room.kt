@@ -17,17 +17,21 @@
 
 package com.example.android.devbyteviewer.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface VideoDao {
+interface VideoDao
+{
 
     //Add getVideos() Query function to VideoDao that returns a List of DatabaseVideo:
+    //we add LiveData so that UI can observe/ or watch for changes in the database
+    //LiveData in Room lets you query from the UI thread and will watch for changes in the database.
     @Query("select * from databasevideo")
-    fun getVideos(): List<DatabaseVideo>
+    fun getVideos(): LiveData<List<DatabaseVideo>>
 
     //Add an Insert function called insertAll() to your VideoDao that takes vararg DatabaseVideo:
     //insertAll() is an upsert, so don’t forget to pass it onConflict=OnConflictStrategy.REPLACE!
