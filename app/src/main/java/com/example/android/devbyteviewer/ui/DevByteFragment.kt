@@ -197,7 +197,6 @@ class DevByteAdapter(val callback: VideoClick) : RecyclerView.Adapter<DevByteVie
             it.videoCallback = callback
         }
     }
-
 }
 
 /**
