@@ -16,3 +16,24 @@
  */
 
 package com.example.android.devbyteviewer.database
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+
+@Dao
+interface VideoDao {
+
+    //Add getVideos() Query function to VideoDao that returns a List of DatabaseVideo:
+    @Query("select * from databasevideo")
+    fun getVideos(): List<DatabaseVideo>
+
+    //Add an Insert function called insertAll() to your VideoDao that takes vararg DatabaseVideo:
+    //insertAll() is an upsert, so don’t forget to pass it onConflict=OnConflictStrategy.REPLACE!
+    //onConflictStrategy.REPLACE means that when a new info is coming from the server, and there is
+    // the same info in the database, the new information from the server should replace the info
+    // in the database.
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg videos: DatabaseVideo)
+}
