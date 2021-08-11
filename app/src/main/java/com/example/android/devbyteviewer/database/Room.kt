@@ -49,15 +49,13 @@ abstract class VideosDatabase : RoomDatabase() {
 
     // add an abstract videoDao variable
     abstract val videoDao: VideoDao
-
+}
     // define an instance variable to store the singleton
     private lateinit var INSTANCE: VideosDatabase
 
     // Define a getDatabase() function to return the VideosDatabase:
     fun getDatabase(context: Context): VideosDatabase {
-           return INSTANCE
-
-        // check whether the database has been initialized, if it hasn't then initialize it.
+   // check whether the database has been initialized, if it hasn't then initialize it.
         // we make the initialization thread safe by wrapping it up with synchronized.
         synchronized(VideosDatabase::class.java){
             if (!::INSTANCE.isInitialized) {
@@ -66,8 +64,10 @@ abstract class VideosDatabase : RoomDatabase() {
                     "videos").build()
             }
         }
+        return INSTANCE
+
+
 
     }
 
 
-}
