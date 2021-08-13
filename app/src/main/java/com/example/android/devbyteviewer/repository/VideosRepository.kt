@@ -26,6 +26,8 @@ import com.example.android.devbyteviewer.domain.Video
 import com.example.android.devbyteviewer.network.Network
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
+
 /*Repository for fetching devbyte videos from the network and storing them on disk
 *
 * Repository modules handle data operations. They provide a clean API so that the rest of the app
@@ -61,8 +63,14 @@ class VideosRepository(private val database: VideosDatabase) {
        withContext(Dispatchers.IO) to force the Kotlin coroutine to switch to the IO dispatcher.
       */
         withContext(Dispatchers.IO){
-            val playlist = Network.devbytes.getPlaylist().await()
-            database.videoDao.insertAll(*playlist.asDatabaseModel())
+            try{
+
+                val playlist = Network.devbytes.getPlaylist().await()
+                database.videoDao.insertAll(*playlist.asDatabaseModel())
+            }catch (e : Exception)
+            {
+                Timber.e("Updated playlist not available")
+            }
         }
 
 
